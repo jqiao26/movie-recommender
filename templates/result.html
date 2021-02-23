@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>Movie Recommendations</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='res_style.css') }}">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.5/css/lightslider.min.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.5/js/lightslider.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
+        <script defer src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script>
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class='title'>
+            <h1>Movie Recommender</h1>
+        </div>
+        <form class="search-box" id="my_form" action=" {{ url_for('topic') }}" method="POST">
+            <input class="search-txt" type="text" name="input" placeholder="Search for a Movie" autocomplete="off">
+            <a class="search-btn" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
+                <i class="fas fa-search"></i>
+            </a>
+        </form>
+
+        <div class="card">
+            <div class="card_left">
+                <img src="{{ in_movie }}"/>
+            </div>
+            <div class="card_right">
+                <h1>{{ in_movie_title }}</h1>
+                <div class="card_right__details">
+                <ul>
+                    {% for genre in genres %}
+                        <li>{{ genre }}</li>
+                    {% endfor %}
+                </ul>
+                </div>
+                <div class="card_right__button">
+                    <a href="https://www.youtube.com/watch?v=ot6C1ZKyiME" target="_blank">WATCH TRAILER</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-recommendations">
+            <section id="recommendations">
+                <h2 class="movie-reco">Recommendations Based on {{ in_movie_title }}</h2>
+                <!-- placeholder images for now -->
+                <ul id="autoWidth" class="cs-hidden">
+                    {% for i in range(0, len) %}
+                        <li class="item-a">
+                            <div class="rec-box">
+                                <!-- img -->
+                                <div class="rec-b-img">
+                                    <img src="{{ posters[i] }}">
+                                </div>
+                                <!-- text -->
+                                <div class="rec-b-text">
+                                    <strong>{{ movies[i] }}</strong>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+
+        <script type="text/javascript">
+                  $(document).ready(function() {
+        $('#autoWidth').lightSlider({
+            autoWidth:true,
+            loop:true,
+            onSliderLoad: function() {
+                $('#autoWidth').removeClass('cs-hidden');
+            } 
+        });  
+      });
+        </script>
+
+    </body>
+
+
+</html>
